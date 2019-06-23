@@ -1,0 +1,49 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #918f8f;
+}
+
+footer button{
+    color: #918f8f;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.counter {
+  font-size: 16px;
+  padding-left: 20px;
+  font-weight: lighter;
+}
+
+.sort-button {
+  width: 220px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.sort-button input {
+  display: none;
+}
+
+.sort-button input:checked + label {
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.sort-button label {
+    font-weight: lighter;
+    font-size: 16px;
+    padding: 9px 9px 7px 9px;
+}
+
+.clearCompleted {
+  visibility: hidden;
+}
+
+.clearCompleted:hover {
+  text-decoration: underline;
+}

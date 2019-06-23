@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+* {
+  font-family: 'HelveticaNeueCyr', Helvetica, sans-serif ;
+}
+
+button {
+  outline: none;
+  background: none;
+  border: none;
+}
