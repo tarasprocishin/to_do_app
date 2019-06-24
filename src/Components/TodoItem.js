@@ -29,18 +29,19 @@ const chekStyle = {
         <li key={index} className="todo-item">
 
         <label
-        style={item.checked ? chekStyle :null }
-        className="checkbox" >
+          style={item.checked ? chekStyle :null }
+          className="checkbox"
+         >
 
           <input
-          id="chek"
+           id="chek"
            type="checkbox"
            checked={item.checked}
            onChange={() => handleChange(item.id) }
-            />
-
-        <p style={item.checked ? completedStyle: null} > {item.text} </ p>
+          />
         </label>
+        <p style={item.checked ? completedStyle: null} > {item.text} </ p>
+
         <button onClick={()=>removeTask(index)}>  &#10005; </button>
 
         </li>
