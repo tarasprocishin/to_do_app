@@ -11,13 +11,13 @@ function TodoItem(props) {
     fontStyle: "italic",
     color: "#cdcdcd",
     textDecoration: "line-through"
-}
+    }
 
 const chekStyle = {
   background:`url(${require('../icons/checked.svg')})`,
   backgroundRepeat:"no-repeat",
   backgroundPosition: "center"
-}
+  }
 
 
 

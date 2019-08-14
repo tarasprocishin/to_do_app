@@ -11,150 +11,108 @@ class App extends React.Component{
     this.state = {
       inputValue: '',
       tasks: [],
-      activeTasks: [],
-      completedTasks: [],
-      item: 0,
-      clickOnFooter: false
+      clickOnFooter: false,
+      filterBy: 'all',
+      items: 0
     }
-
-    this.addTask = this.addTask.bind(this)
-    this.inputTask = this.inputTask.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.removeTask = this.removeTask.bind(this)
-    this.showActive = this.showActive.bind(this)
-    this.showCompleted = this.showCompleted.bind(this)
-    this.showAll = this.showAll.bind(this)
-    this.clearCompleted = this.clearCompleted.bind(this)
-    this.handleChangeFooter = this.handleChangeFooter.bind(this)
-
-
   }
 
-  inputTask(event) {
+  inputTask = (event) => {
     this.setState({inputValue: event.target.value});
   }
-
-  addTask(event) {
-    if(event.keyCode === 13){
-      const {inputValue, item} = this.state;
+ 
+  addTask = (event) => {
       this.setState(prevState => {
-        if(inputValue === '')return;
-          const copy = prevState.tasks.concat({})
-          let count = prevState.item + 1
-          copy[item]['text'] = inputValue;
-          copy[item]['checked'] = false;
-          copy[item]['id'] = item
+        let { inputValue, tasks, items } = prevState;
+          if(inputValue === '')return;
+          items += 1 
           return {
              inputValue:'',
-             tasks: copy,
-             activeTasks: copy,
-             item: count
+             items: items,
+             tasks: [
+              ...tasks,
+              {
+                text: inputValue,
+                checked:  false,
+                id: items
+              }]
            };
-        })
-      }
+        });
+      event.preventDefault();
     }
 
-  removeTask(index) {
+  removeTask = (index) => {
     this.setState(prevState => {
-      let count = prevState.item;
       const copy = [...prevState.tasks]
-      if(copy[index].checked === false){
-        count--;
-      }
-       copy.splice(index,1);
-       const updateActiveTask =  this.serchActivTask(copy);
-       const updateCompletedTask = this.updateCompletedTask(copy)
-
-
-
-      return {tasks: copy,
-              item: count,
-              activeTasks: updateActiveTask,
-              completedTasks: updateCompletedTask
-              }
+      copy.splice(index,1);
+      let length = prevState.tasks.length;
+      return {
+              tasks: copy,
+              item: length
+            }
     })
-
   }
 
-
-serchActivTask(arr){
-  const filtredArr = arr.filter((el) => {
-      return el.checked === true ? false : true
-      })
-      return filtredArr;
-}
-
-updateCompletedTask(arr){
-  const filtredArr = arr.filter((el) => {
-      return el.checked === true ? true : false
-      })
-      return filtredArr;
-}
-
-
-  handleChange(id) {
+  handleChange = (id) => {
     this.setState(prevState => {
-      let count = prevState.item;
-        const updatedTask = prevState.tasks.map(task => {
+        const updatedTask = [...prevState.tasks].map(task => {
             if (task.id === id) {
-                task.checked === false ? count --: count ++;
                 task.checked = !task.checked
             }
             return task
         })
-
-      const updateActiveTask =  this.serchActivTask(prevState.tasks);
-      const updateCompletedTask = this.updateCompletedTask(prevState.tasks)
-
-        return {
-            tasks: updatedTask,
-            item: count,
-            activeTasks: updateActiveTask,
-            completedTasks: updateCompletedTask
-        }
+        return { tasks: updatedTask }
       })
     }
 
-    showActive () {
-      this.setState({tasks: this.state.activeTasks})
+  showActive = () => {
+      this.setState({filterBy: 'active'})
     }
 
-    showCompleted () {
-      this.setState({tasks: this.state.completedTasks})
+  showCompleted = () => {
+      this.setState({filterBy: 'completed'})
     }
 
-    showAll () {
-      const {completedTasks, activeTasks} = this.state;
-      this.setState({tasks: activeTasks.concat(completedTasks)})
+  showAll = () => {
+      this.setState({filterBy: 'all'})
     }
 
-    clearCompleted () {
-      const {activeTasks} = this.state;
-      this.setState({
-        tasks: activeTasks,
-        completedTasks: []
+  clearCompleted = () => {
+      const { tasks } = this.state;
+      let updatedTask = tasks.filter(task => {
+        return task.checked === false;
       })
+      this.setState({ tasks: updatedTask })
     }
 
-    handleChangeFooter (){
-      const {clickOnFooter} = this.state;
-
+    handleChangeFooter = () => {
       this.setState({clickOnFooter: true})
     }
 
   render(){
-    const {tasks, item, completedTasks, activeTasks, clickOnFooter} = this.state;
-    const isEmptyTaskBoard = !(!completedTasks[0] && !activeTasks[0]);
+    const { filterBy, tasks, clickOnFooter } = this.state;
+    let filtredTasks = [];
 
+    switch (filterBy) {
+      case 'completed':
+        filtredTasks = tasks.filter( task => task.checked);
+      break;
+      case 'active':
+        filtredTasks = tasks.filter( task => !task.checked);
+      break;
+      case 'all':
+        filtredTasks = tasks;
+      break;
+    } 
 
     return (
       <div className="App">
           <h1>todos</h1>
           <div className="input-board">
-            <div className="print-task">
+            <form className="print-task"  onSubmit={this.addTask }>
               <label
                htmlFor="print-task"
-               style={isEmptyTaskBoard ? {visibility:"visible"}:{visibility:"hidden"}}
+               style={tasks.length ? {visibility:"visible"}:{visibility:"hidden"}}
                >
                   &#10095;
               </label>
@@ -164,21 +122,16 @@ updateCompletedTask(arr){
                 type="text"
                 onChange={this.inputTask}
                 value={this.state.inputValue}
-                onKeyDown={this.addTask }
                />
-            </div>
+            </form>
 
              <TodoItem
-             tasks={tasks}
+             tasks={filtredTasks}
              handleChange={this.handleChange}
              removeTask={this.removeTask}
               />
              <Footer
-             isEmptyTaskBoard={isEmptyTaskBoard}
-             activeTasks={activeTasks}
-             completedTasks={completedTasks}
              tasks={tasks}
-             item={item}
              clickOnFooter={clickOnFooter}
              showActive={this.showActive}
              showCompleted={this.showCompleted}
@@ -189,11 +142,7 @@ updateCompletedTask(arr){
           </div>
 
       </div>
-
-
-
-  );
-}
+      )}
 }
 
 export default App;
