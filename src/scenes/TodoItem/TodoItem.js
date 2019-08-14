@@ -1,6 +1,5 @@
 import React from 'react';
-
-import '../css/TodoItem.css';
+import './TodoItem.css';
 
 
 function TodoItem(props) {
@@ -14,7 +13,7 @@ function TodoItem(props) {
     }
 
 const chekStyle = {
-  background:`url(${require('../icons/checked.svg')})`,
+  background:`url(${require('../../icons/checked.svg')})`,
   backgroundRepeat:"no-repeat",
   backgroundPosition: "center"
   }

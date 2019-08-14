@@ -1,9 +1,8 @@
 import React from 'react';
-import './fonts/stylesheet.css'
-import './css/App.css';
-
-import TodoItem from './Components/TodoItem';
-import Footer from './Components/Footer';
+import '../../fonts/stylesheet.css'
+import './Main.css';
+import TodoItem from '../TodoItem/TodoItem';
+import Footer from '../Footer/Footer';
 
 class App extends React.Component{
   constructor(){
@@ -11,7 +10,6 @@ class App extends React.Component{
     this.state = {
       inputValue: '',
       tasks: [],
-      clickOnFooter: false,
       filterBy: 'all',
       items: 0
     }
@@ -85,10 +83,6 @@ class App extends React.Component{
       this.setState({ tasks: updatedTask })
     }
 
-    handleChangeFooter = () => {
-      this.setState({clickOnFooter: true})
-    }
-
   render(){
     const { filterBy, tasks, clickOnFooter } = this.state;
     let filtredTasks = [];
@@ -132,12 +126,10 @@ class App extends React.Component{
               />
              <Footer
              tasks={tasks}
-             clickOnFooter={clickOnFooter}
              showActive={this.showActive}
              showCompleted={this.showCompleted}
              showAll={this.showAll}
              clearCompleted={this.clearCompleted}
-             handleChangeFooter={this.handleChangeFooter}
              />
           </div>
 

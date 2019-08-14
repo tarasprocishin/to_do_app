@@ -1,19 +1,14 @@
 import React from 'react';
-import '../css/Footer.css';
+import { Link } from 'react-router-dom';
+import './Footer.css';
+import { routes } from '../router';
 
 function Footer(props) {
     const { showActive,
             showCompleted,
             showAll,
             clearCompleted,
-            clickOnFooter,
-            handleChangeFooter,
             tasks } = props
-
-  const chekStyle = {
-    border: "2px solid #e0e0e0",
-    borderRadius: "5px"
-  }
 
   const isComplited = tasks.filter(task => task.checked);
   const items = tasks.length - isComplited.length
@@ -24,26 +19,35 @@ function Footer(props) {
       <div className="counter">{items} items left</div>
       <div
        className="sort-button"
-       onClick={()=>{handleChangeFooter()}}
        >
+        <Link className="link" to={routes.main}>
         <input type="radio" id="all" name="show" value="all"/>
+        </Link>
         <label
          htmlFor="all"
          onClick={() => {showAll()}}
-         style={clickOnFooter ? null : chekStyle}
-         >All</label>
-
+         >
+          All
+        </label>
+        <Link  className="link" to={routes.active}>
         <input type="radio" id="active" name="show" value="active"/>
+        </Link>
         <label
         htmlFor="active"
         onClick={() => {showActive()}}
-        >Active</label>
-
+        >
+          Active
+        </label>
+        <Link  className="link" to={routes.completed}>
         <input type="radio" id="completed" name="show" value="completed"/>
+        </Link>
         <label
          htmlFor="completed"
          onClick={() => {showCompleted()}}
-         >Completed</label>
+         >
+            Completed
+        </label>
+        
       </div>
       <button
        className="clearCompleted"
