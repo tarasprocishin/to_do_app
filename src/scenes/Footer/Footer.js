@@ -20,34 +20,15 @@ function Footer(props) {
       <div
        className="sort-button"
        >
-        <Link className="link" to={routes.main}>
-        <input type="radio" id="all" name="show" value="all"/>
-        </Link>
-        <label
-         htmlFor="all"
-         onClick={() => {showAll()}}
-         >
+        <Link className="link"  to={routes.main} onClick={() => {showAll()}}>
           All
-        </label>
-        <Link  className="link" to={routes.active}>
-        <input type="radio" id="active" name="show" value="active"/>
         </Link>
-        <label
-        htmlFor="active"
-        onClick={() => {showActive()}}
-        >
-          Active
-        </label>
-        <Link  className="link" to={routes.completed}>
-        <input type="radio" id="completed" name="show" value="completed"/>
+        <Link  className="link" to={routes.active} onClick={() => {showActive()}}>
+           Active
+       </Link>
+        <Link  className="link" to={routes.completed} onClick={() => {showCompleted()}}>
+           Completed
         </Link>
-        <label
-         htmlFor="completed"
-         onClick={() => {showCompleted()}}
-         >
-            Completed
-        </label>
-        
       </div>
       <button
        className="clearCompleted"
