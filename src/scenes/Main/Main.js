@@ -3,138 +3,115 @@ import '../../fonts/stylesheet.css'
 import './Main.css';
 import TodoItem from '../TodoItem/TodoItem';
 import Footer from '../Footer/Footer';
+import { compose, withStateHandlers, withState, withHandlers } from 'recompose';
 
-class App extends React.Component{
-  constructor(){
-    super()
-    this.state = {
-      inputValue: '',
-      tasks: [],
-      filterBy: 'all',
-      items: 0
-    }
-  }
+const Layout = ({
+  filterBy,
+  tasks,
+  onSubmit,
+  onChange,
+  inputValue,
+  handleChange,
+  removeTask,
+  clearCompleted,
+  showActive,
+  showCompleted,
+  showAll
+}) => {
 
-  inputTask = (event) => {
-    this.setState({inputValue: event.target.value});
-  }
- 
-  addTask = (event) => {
-      this.setState(prevState => {
-        let { inputValue, tasks, items } = prevState;
-          if(inputValue === '')return;
-          items += 1 
-          return {
-             inputValue:'',
-             items: items,
-             tasks: [
-              ...tasks,
-              {
-                text: inputValue,
-                checked:  false,
-                id: items
-              }]
-           };
-        });
+  return (
+    <div className="App">
+      <h1>todos</h1>
+      <div className="input-board">
+        <form className="print-task" onSubmit={onSubmit}>
+          <label
+            htmlFor="print-task"
+            style={tasks.length ? { visibility: "visible" } : { visibility: "hidden" }}
+          >
+            &#10095;
+            </label>
+          <input
+            id="print-task"
+            placeholder="What needs to be done?"
+            type="text"
+            onChange={onChange}
+            value={inputValue}
+          />
+        </form>
+
+        <TodoItem
+          tasks={tasks}
+          handleChange={handleChange}
+          removeTask={removeTask}
+          filterBy={filterBy}
+        />
+        <Footer
+          tasks={tasks}
+          showActive={showActive}
+          showCompleted={showCompleted}
+          showAll={showAll}
+          clearCompleted={clearCompleted}
+        />
+      </div>
+    </div>
+  )
+}
+
+const App = compose(
+  withState('inputValue', 'setValue', ''),
+  withState('tasks', 'setTasks', []),
+  withState('items', 'setItems', 0),
+  withHandlers({
+    onChange: props => event => {
+      props.setValue(event.target.value)
+    },
+    onSubmit: props => event => {
       event.preventDefault();
+      if (!props.inputValue) return;
+      let count = props.items;
+      count += 1;
+      props.setItems(count);
+      props.setTasks([
+        ...props.tasks,
+        {
+          text: props.inputValue,
+          checked: false,
+          id: props.items
+        }]);
+      props.setValue('')
     }
+  }),
 
-  removeTask = (index) => {
-    this.setState(prevState => {
-      const copy = [...prevState.tasks]
-      copy.splice(index,1);
-      let length = prevState.tasks.length;
-      return {
-              tasks: copy,
-              item: length
-            }
-    })
-  }
-
-  handleChange = (id) => {
-    this.setState(prevState => {
-        const updatedTask = [...prevState.tasks].map(task => {
-            if (task.id === id) {
-                task.checked = !task.checked
-            }
-            return task
-        })
-        return { tasks: updatedTask }
+  withHandlers({
+    handleChange: props => id => {
+      const updatedTask = [...props.tasks].map(task => {
+        if (task.id === id) task.checked = !task.checked;
+        return task
       })
-    }
-
-  showActive = () => {
-      this.setState({filterBy: 'active'})
-    }
-
-  showCompleted = () => {
-      this.setState({filterBy: 'completed'})
-    }
-
-  showAll = () => {
-      this.setState({filterBy: 'all'})
-    }
-
-  clearCompleted = () => {
-      const { tasks } = this.state;
-      let updatedTask = tasks.filter(task => {
+      props.setTasks(updatedTask)
+    },
+    removeTask: props => index => {
+      const updatedTask = [...props.tasks]
+      updatedTask.splice(index, 1);
+      props.setTasks(updatedTask)
+      props.setItems(props.tasks.length)
+    },
+    clearCompleted: props => () => {
+      let updatedTask = props.tasks.filter(task => {
         return task.checked === false;
       })
-      this.setState({ tasks: updatedTask })
+      props.setTasks(updatedTask)
     }
+  }),
 
-  render(){
-    const { filterBy, tasks, clickOnFooter } = this.state;
-    let filtredTasks = [];
-
-    switch (filterBy) {
-      case 'completed':
-        filtredTasks = tasks.filter( task => task.checked);
-      break;
-      case 'active':
-        filtredTasks = tasks.filter( task => !task.checked);
-      break;
-      case 'all':
-        filtredTasks = tasks;
-      break;
-    } 
-
-    return (
-      <div className="App">
-          <h1>todos</h1>
-          <div className="input-board">
-            <form className="print-task"  onSubmit={this.addTask }>
-              <label
-               htmlFor="print-task"
-               style={tasks.length ? {visibility:"visible"}:{visibility:"hidden"}}
-               >
-                  &#10095;
-              </label>
-                <input
-                id="print-task"
-                placeholder="What needs to be done?"
-                type="text"
-                onChange={this.inputTask}
-                value={this.state.inputValue}
-               />
-            </form>
-
-             <TodoItem
-             tasks={filtredTasks}
-             handleChange={this.handleChange}
-             removeTask={this.removeTask}
-              />
-             <Footer
-             tasks={tasks}
-             showActive={this.showActive}
-             showCompleted={this.showCompleted}
-             showAll={this.showAll}
-             clearCompleted={this.clearCompleted}
-             />
-          </div>
-
-      </div>
-      )}
-}
+  withStateHandlers({
+      filterBy: 'all'
+    },
+    {
+      showActive: () => () => ({ filterBy: 'active' }),
+      showCompleted: () => () => ({ filterBy: 'completed' }),
+      showAll: () => () => ({ filterBy: 'all' })
+    })
+)(Layout)
 
 export default App;
