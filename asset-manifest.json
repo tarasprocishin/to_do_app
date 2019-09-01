@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/to_do_app/static/css/main.04fc4891.chunk.css",
+    "main.js": "/to_do_app/static/js/main.97c2827a.chunk.js",
+    "main.js.map": "/to_do_app/static/js/main.97c2827a.chunk.js.map",
+    "runtime~main.js": "/to_do_app/static/js/runtime~main.f4485b18.js",
+    "runtime~main.js.map": "/to_do_app/static/js/runtime~main.f4485b18.js.map",
+    "static/js/2.dc12531a.chunk.js": "/to_do_app/static/js/2.dc12531a.chunk.js",
+    "static/js/2.dc12531a.chunk.js.map": "/to_do_app/static/js/2.dc12531a.chunk.js.map",
+    "index.html": "/to_do_app/index.html",
+    "precache-manifest.efffa613714372f623f711d6f0c0aa46.js": "/to_do_app/precache-manifest.efffa613714372f623f711d6f0c0aa46.js",
+    "service-worker.js": "/to_do_app/service-worker.js",
+    "static/css/main.04fc4891.chunk.css.map": "/to_do_app/static/css/main.04fc4891.chunk.css.map",
+    "static/media/checked.svg": "/to_do_app/static/media/checked.c530de65.svg",
+    "static/media/TodoItem.css": "/to_do_app/static/media/circle.2a7db503.svg"
+  }
+}
