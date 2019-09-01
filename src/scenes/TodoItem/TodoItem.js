@@ -1,10 +1,12 @@
 import React from 'react';
-import './TodoItem.css';
+import './TodoItem.css'; 
+import { routes } from '../router';
 
 
 
-function TodoItem(props) {
-  const { tasks, handleChange, removeTask, filterBy } = props
+function TodoItem( props ) {
+  const { tasks, handleChange, removeTask, filterBy, match } = props
+  console.log(match.path);
 
   const completedStyle = {
     display: "block",
@@ -19,9 +21,7 @@ function TodoItem(props) {
     backgroundPosition: "center"
   }
 
-  let filtredTasks = filterTask(filterBy, tasks);
-
-
+  let filtredTasks = filterTask(match.path, tasks);
 
   return (
     <ul className="todo-item-list" >
@@ -52,19 +52,19 @@ function TodoItem(props) {
   )
 }
 
-function filterTask( filter, tasks) {
+function filterTask(filter, tasks) {
   let filtredTasks = [];
   switch (filter) {
-    case 'completed':
-      filtredTasks = tasks.filter( task => task.checked);
-    break;
-    case 'active':
-      filtredTasks = tasks.filter( task => !task.checked);
-    break;
-    case 'all':
+    case '/completed':
+      filtredTasks = tasks.filter(task => task.checked);
+      break;
+    case '/active':
+      filtredTasks = tasks.filter(task => !task.checked);
+      break;
+    case '/':
       filtredTasks = tasks;
-    break;
-  } 
+      break;
+  }
   return filtredTasks;
 }
 

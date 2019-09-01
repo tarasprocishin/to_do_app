@@ -1,12 +1,10 @@
 import React from 'react';
-import '../../fonts/stylesheet.css'
 import './Main.css';
 import TodoItem from '../TodoItem/TodoItem';
 import Footer from '../Footer/Footer';
 import { compose, withStateHandlers, withState, withHandlers } from 'recompose';
 
 const Layout = ({
-  filterBy,
   tasks,
   onSubmit,
   onChange,
@@ -14,9 +12,7 @@ const Layout = ({
   handleChange,
   removeTask,
   clearCompleted,
-  showActive,
-  showCompleted,
-  showAll
+  match
 }) => {
 
   return (
@@ -43,14 +39,12 @@ const Layout = ({
           tasks={tasks}
           handleChange={handleChange}
           removeTask={removeTask}
-          filterBy={filterBy}
+          match={match}
         />
         <Footer
           tasks={tasks}
-          showActive={showActive}
-          showCompleted={showCompleted}
-          showAll={showAll}
           clearCompleted={clearCompleted}
+          match={match}
         />
       </div>
     </div>
@@ -103,15 +97,6 @@ const App = compose(
       props.setTasks(updatedTask)
     }
   }),
-
-  withStateHandlers({
-      filterBy: 'all'
-    },
-    {
-      showActive: () => () => ({ filterBy: 'active' }),
-      showCompleted: () => () => ({ filterBy: 'completed' }),
-      showAll: () => () => ({ filterBy: 'all' })
-    })
 )(Layout)
 
 export default App;

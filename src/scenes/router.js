@@ -18,7 +18,7 @@ export default  function Router() {
                 <Route exact path={routes.main} component={Main} />
                 <Route path={routes.completed} component={Main} />
                 <Route path={routes.active} component={Main} />
-                <Route component={NotFound} component={Main} />  
+                <Route component={NotFound} component={NotFound} />  
             </Switch>
         </BrowserRouter>
     )
