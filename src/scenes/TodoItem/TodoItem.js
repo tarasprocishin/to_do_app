@@ -5,7 +5,7 @@ import { routes } from '../router';
 
 
 function TodoItem( props ) {
-  const { tasks, handleChange, removeTask, filterBy, match } = props
+  const { tasks, handleChange, removeTask, match } = props
   console.log(match.path);
 
   const completedStyle = {
@@ -55,13 +55,13 @@ function TodoItem( props ) {
 function filterTask(filter, tasks) {
   let filtredTasks = [];
   switch (filter) {
-    case '/completed':
+    case '/to_do_app/completed':
       filtredTasks = tasks.filter(task => task.checked);
       break;
-    case '/active':
+    case '/to_do_app/active':
       filtredTasks = tasks.filter(task => !task.checked);
       break;
-    case '/':
+    case '/to_do_app/':
       filtredTasks = tasks;
       break;
   }

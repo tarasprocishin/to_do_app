@@ -5,9 +5,9 @@ import NotFound from './NotFound/NotFound'
 
 
 export const routes = {
-    main: '/',
-    active: '/active',
-    completed: '/completed'
+    main: '/to_do_app/',
+    active: '/to_do_app/active',
+    completed: '/to_do_app/completed'
 };
 
  
