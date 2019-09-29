@@ -1,0 +1,52 @@
+.todo-item-list{
+  padding: 0;
+  margin: 0px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.todo-item  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 0;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 100;
+  color: #383736;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+}
+
+.checkbox {
+  width: 44px;
+  height: 44px;
+  margin-right: 10px;
+  background: url(../../icons/circle.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.checkbox p{
+  padding-left: 54px;
+  line-height: 44px;
+  margin: 0;
+}
+
+input[type=checkbox]  {
+    display: none;
+}
+
+.todo-item button {
+    display: inline-block;
+    font-size: 22px;
+    font-weight:200 ;
+    color: #75726f;
+    padding-right: 20px;
+    visibility:hidden;
+}
+
+.todo-item:hover button {
+  visibility: visible;
+}
