@@ -1,10 +1,10 @@
 import React from 'react';
-import './TodoItem.css'; 
-import { routes } from '../router';
+import './TodoItem.css';
 
 
 
-function TodoItem( props ) {
+
+function TodoItem(props) {
   const { tasks, handleChange, removeTask, match } = props
   console.log(match.path);
 
@@ -55,13 +55,13 @@ function TodoItem( props ) {
 function filterTask(filter, tasks) {
   let filtredTasks = [];
   switch (filter) {
-    case '/to_do_app/completed':
+    case '/completed':
       filtredTasks = tasks.filter(task => task.checked);
       break;
-    case '/to_do_app/active':
+    case '/active':
       filtredTasks = tasks.filter(task => !task.checked);
       break;
-    case '/to_do_app/':
+    case '/':
       filtredTasks = tasks;
       break;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import './Main.css';
 import TodoItem from '../TodoItem/TodoItem';
 import Footer from '../Footer/Footer';
-import { compose, withStateHandlers, withState, withHandlers } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
 
 const Layout = ({
   tasks,
